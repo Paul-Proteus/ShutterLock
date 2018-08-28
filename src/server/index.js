@@ -45,18 +45,27 @@ app.post('/signup',
   Controller.createUser,
 
   // Users.createUser, 
-  tokenService.createToken, 
-  (req, res) => {
-    res.json({ token: res.locals.token, palettes: res.locals.palettes });
-});
-
+  // tokenService.createToken, 
+  // (req, res) => {
+  //   res.json({ token: res.locals.token, palettes: res.locals.palettes });
+// }
+);
 // store the token manually, async storage - for tokens. 
   // have to write own service for putting tokens into async storage 
+// app.get('/signup', 
+//   Controller.verifyUser
+// )
+
 
 //Login Route
-app.post('/login', Users.login, tokenService.createToken, (req, res) => {
-  res.json({ token: res.locals.token, palettes: res.locals.palettes });
-});
+app.post('/login', 
+  Controller.verifyUser,
+  
+//   // tokenService.createToken, (req, res) => {
+// //   res.json({ token: res.locals.token, palettes: res.locals.palettes });
+// // }
+
+);
 
 // Start server
 app.listen(PORT, () => console.log('Server started on port', PORT));

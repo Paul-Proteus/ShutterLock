@@ -14,15 +14,17 @@ export default class App extends React.Component {
   }
 
   login(e) {
-    const { username, password } = this.state
-    fetch('http://192.168.0.126:8080/signup', {
-      method: 'GET',
+    const { username, password } = this.state;
+    console.log('inside of login ', username, password);
+
+    fetch('http://192.168.0.126:8080/login', {
+      method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
         "Content-Type": "application/json"
       },
-    }).then(response => {/* console.log('fetched response ', response); */})
-    .catch(err => console.log('error ', err));
+    }).then(response => {console.log('fetched response ', response);})
+      .catch(err => console.log('error ', err));
   }
 
   signUp() {
