@@ -2,17 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const path = require('path');
-const mongoose = require('mongoose');
+// using postgresSQL instead of mongoose
 const cors = require('cors');
 
 const Users = require('./controllers/Users');
 const tokenService = require('./services/TokenService');
 const authService = require('./services/AuthService');
 
-// Create connection to Mongo DB via Mongoose
-mongoose.connect(process.env.DB_URI);
-mongoose.connection.once('open', () => console.log('Hello from tinge-db!'));
-mongoose.Promise = global.Promise;
+const Controller = require('./controllers/event-controller.js');
+
+// set up postgres SQL
 
 // Configure Express Application Server
 const app = express();
@@ -29,9 +28,12 @@ app.use(cors());
 app.use(tokenService.receiveToken);
 
 // Dummy Route
-app.get('/', (req, res) => {
+app.get('/', 
+  // Controller.index
+(req, res) => {
   res.send('Hello Brit');
-});
+}
+);
 
 // Dummy Restricted Route
 app.get('/restricted', authService.restrict(), (req, res) => {
@@ -39,29 +41,38 @@ app.get('/restricted', authService.restrict(), (req, res) => {
 });
 
 // Signup Route
-app.post('/signup', Users.createUser, tokenService.createToken, (req, res) => {
-  res.json({ token: res.locals.token, palettes: res.locals.palettes });
+app.post('/signup', 
+  Controller.createUser,
+
+  // Users.createUser, 
+  tokenService.createToken, 
+  (req, res) => {
+    res.json({ token: res.locals.token, palettes: res.locals.palettes });
 });
+
+// store the token manually, async storage - for tokens. 
+  // have to write own service for putting tokens into async storage 
 
 //Login Route
 app.post('/login', Users.login, tokenService.createToken, (req, res) => {
   res.json({ token: res.locals.token, palettes: res.locals.palettes });
 });
 
-//Generate Palette Route
-app.post('/generatePalette', Users.generatePalette, (req, res) => {
-  
-});
-
-//Save Palette Route
-app.post('/savePalette', authService.restrict(), Users.savePalette, tokenService.createToken, (req, res) => {
-  res.json( { token: res.locals.token, palettes: res.locals.palettes });
-});
-
-//Delete Palette Route
-app.delete('/deletePalette/:palette_id', authService.restrict(), Users.deletePalette, tokenService.createToken, (req, res) => {
-  res.json({token: res.locals.token, palettes: res.locals.palettes})
-});
-
 // Start server
 app.listen(PORT, () => console.log('Server started on port', PORT));
+
+
+// //Generate Palette Route
+// app.post('/generatePalette', Users.generatePalette, (req, res) => {
+  
+// });
+
+// //Save Palette Route
+// app.post('/savePalette', authService.restrict(), Users.savePalette, tokenService.createToken, (req, res) => {
+//   res.json( { token: res.locals.token, palettes: res.locals.palettes });
+// });
+
+// //Delete Palette Route
+// app.delete('/deletePalette/:palette_id', authService.restrict(), Users.deletePalette, tokenService.createToken, (req, res) => {
+//   res.json({token: res.locals.token, palettes: res.locals.palettes})
+// });
