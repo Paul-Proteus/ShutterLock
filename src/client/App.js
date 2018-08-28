@@ -15,7 +15,7 @@ export default class App extends React.Component {
 
   login(e) {
     const { username, password } = this.state
-    fetch('http://localhost:8080/signup', {
+    fetch('http://192.168.0.126:8080/signup', {
       method: 'GET',
       body: JSON.stringify({ username, password }),
       headers: {
@@ -27,8 +27,6 @@ export default class App extends React.Component {
 
   signUp() {
     const { username, password } = this.state
-    console.log('checking username', username)
-    console.log('checking password', password)
 
     fetch('http://192.168.0.126:8080/signup', {
       method: 'POST',
@@ -69,9 +67,7 @@ export default class App extends React.Component {
         <View 
           style={{ margin: 20, flexDirection: 'row', justifyContent: 'space-between' }} />
             <Button
-              onPress={() => {
-                
-              }}
+              onPress={() => {this.login()}}
               title="Login"
             />
 

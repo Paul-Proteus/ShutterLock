@@ -2,17 +2,17 @@ const db = require('../elephantsql');
 
 const controller = {
 
-  // user data
+  // create new user
   createUser (req, res, next) {
     const { username, password } = req.body
-    console.log('inside of create user');
-    console.log(req.body.username);
-    // console.log(res.body);
+    const text = 'INSERT INTO account(username, password) VALUES($1, $2) RETURNING *';
+    const values = [username.toLowerCase(), password.toLowerCase()];
 
-    // db.query('INSERT INTO "ACCOUNTS"')
-    // .then(userData => {
-    //   res.send(userData);
-    // })
+    db.query(text, values)
+      .then(res => console.log(res.rows))
+      .catch(err => console.error(err.stack));
+
+    next();
   },
 
   index(req, res, next) {
