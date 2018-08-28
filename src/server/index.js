@@ -2,13 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const path = require('path');
-// using postgresSQL instead of mongoose
 const cors = require('cors');
 
-const Users = require('./controllers/Users');
+// using postgresSQL instead of mongoose
 const tokenService = require('./services/TokenService');
 const authService = require('./services/AuthService');
-
 const Controller = require('./controllers/event-controller.js');
 
 // set up postgres SQL
@@ -43,19 +41,14 @@ app.get('/restricted', authService.restrict(), (req, res) => {
 // Signup Route
 app.post('/signup', 
   Controller.createUser,
-
-  // Users.createUser, 
-  // tokenService.createToken, 
-  // (req, res) => {
-  //   res.json({ token: res.locals.token, palettes: res.locals.palettes });
-// }
+  tokenService.createToken, 
+  (req, res) => {
+    console.log('where is my token', res.locals.token)
+    res.json({ token: res.locals.token });
+  }
 );
 // store the token manually, async storage - for tokens. 
   // have to write own service for putting tokens into async storage 
-// app.get('/signup', 
-//   Controller.verifyUser
-// )
-
 
 //Login Route
 app.post('/login', 

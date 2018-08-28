@@ -1,11 +1,12 @@
 const db = require('../elephantsql');
+const bcrypt = require('bcryptjs');
 
 const controller = {
 
   createUser (req, res, next) {
     const username = req.body.username.toLowerCase();
     const password = req.body.password.toLowerCase();
-    console.log('inside of createUser', username)
+    // console.log('inside of createUser', username)
 
     const text = 'INSERT INTO account(username, password) VALUES($1, $2) RETURNING *';
     const values = [username, password];
@@ -14,6 +15,12 @@ const controller = {
       .then(res => console.log(res.rows))
       .catch(err => console.error(err.stack));
 
+    // this is the part to care about. 
+    res.locals.TokenData = {
+      username: username,
+    };
+
+    next();
   },
 
   verifyUser(req, res, next) {

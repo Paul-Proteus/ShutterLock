@@ -31,9 +31,10 @@ class Token {
 
   // Middleware for creating token
   createToken(req, res, next) {
-    jwt.sign(res.locals.newTokenData, process.env.SECRET, (err, jwt) => {
+    jwt.sign(res.locals.TokenData, process.env.SECRET, (err, jwt) => {
       if (err) console.error('Error in TokenService.createToken:', err);
       res.locals.token = jwt;
+      console.log('inside of create token ', res.locals.token)
       next();
     });
   }

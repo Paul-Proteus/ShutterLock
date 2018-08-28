@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import deviceStorage from './deviceStorage.js';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -9,11 +10,9 @@ export default class App extends React.Component {
       password: 'Enter Password Here',
     }
 
-    this.login = this.login.bind(this);
-    this.signUp = this.signUp.bind(this);
   }
 
-  login(e) {
+  login = (e) => {
     const { username, password } = this.state;
     console.log('inside of login ', username, password);
 
@@ -27,16 +26,16 @@ export default class App extends React.Component {
       .catch(err => console.log('error ', err));
   }
 
-  signUp() {
+  signUp = () => {
     const { username, password } = this.state
 
     fetch('http://192.168.0.126:8080/signup', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-    }).then(response => {/* console.log('fetched response ', response); */})
+    }).then(response => {console.log('fetched response ', response.locals.token);}) 
     .catch(err => console.log('error ', err));
   }
 

@@ -4,6 +4,25 @@ const bcrypt = require('bcryptjs');
 
 const SALT_ROUNDS = 10;
 
+// this file imports bcrypt, uses the hash function on the password section.
+
+userSchema.pre('save', function(next) {
+  const self = this;
+  bcrypt
+    .hash(this.password_digest, SALT_ROUNDS)
+    .then(function(hash) {
+      self.password_digest = hash;
+      next();
+    })
+    .catch(function(error) {
+      console.error('Error encrypting password:', error);
+    });
+});
+
+
+
+
+
 const paletteSchema = new Schema({
   name: { type: String, required: true },
   colors: [
@@ -21,18 +40,6 @@ const userSchema = new Schema({
   palettes: [paletteSchema]
 });
 
-userSchema.pre('save', function(next) {
-  const self = this;
-  bcrypt
-    .hash(this.password_digest, SALT_ROUNDS)
-    .then(function(hash) {
-      self.password_digest = hash;
-      next();
-    })
-    .catch(function(error) {
-      console.error('Error encrypting password:', error);
-    });
-});
 
 const User = mongoose.model('User', userSchema);
 const Palette = mongoose.model('Palette', paletteSchema);

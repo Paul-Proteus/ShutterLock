@@ -2,31 +2,6 @@ const { User, Palette } = require('../models/User');
 const bcrypt = require('bcryptjs');
 
 const UsersController = {
-  // Middleware for signup
-  createUser(req, res, next) {
-    if (req.body.username && req.body.password) {
-      const newUser = new User({
-        username: req.body.username,
-        password_digest: req.body.password
-      });
-      newUser.save((err, user) => {
-        if (err) {
-          console.error('Error in UsersController.createUser:', err);
-          res.send(err);
-        }
-        res.locals.newTokenData = {
-          _id: user._id,
-          username: user.username,
-          palettes: []
-        };
-        res.locals.palettes = [];
-        next();
-      });
-    } else {
-      res.status(400);
-      res.send('No username or password.');
-    }
-  },
   // Middlware for login
   login(req, res, next) {
     User.find(
@@ -38,6 +13,7 @@ const UsersController = {
           res.status(401);
           res.send('User not found.');
         } else {
+          // this is the part to care about ------------------------------------------------>
           bcrypt.compare(req.body.password, docs[0].password_digest).then(isPasswordMatch => {
             if (isPasswordMatch) {
               res.locals.palettes = docs[0].palettes;
@@ -47,6 +23,7 @@ const UsersController = {
                 palettes: docs[0].palettes
               };
               next();
+          // --------------------------------------------------------------------------------->
             } else {
               res.status(401).send('Invalid login credentials.');
             }
@@ -56,45 +33,13 @@ const UsersController = {
     );
   },
 
-  // Middleware for generating new palette
-  generatePalette(req, res, next) {
-    // Import npm dominant color package (To be determined)
-  },
-
-  // Middleware for creating new palette
-  savePalette(req, res, next) {
-    console.log('req body colors', req.body.colors);
-    User.findById(res.locals.tokenData._id, (err, doc) => {
-      if (err) {
-        console.err(err);
-      }
-      const newPalette = new Palette({
-        name: req.body.name,
-        colors: req.body.colors
-      });
-      doc.palettes.push(newPalette);
-      doc.save((err, user) => {
-        if (err) {
-          console.error('Error in UserController.savePalette', err);
-          res.send(err);
-        }
-        res.locals.palettes = user.palettes;
-        res.locals.newTokenData = {
-          _id: res.locals.tokenData._id,
-          username: res.locals.tokenData.username,
-          palettes: user.palettes
-        };
-        next();
-      });
-    });
-  },
-
   // Middleware for deleting palette by palette ID
   deletePalette(req, res, next) {
     // need to figure out which element of palettes array wants to be deleted
     // get user from token and get doc back
     // grab doc.palettes like above and use filter method to get array element to be deleted
 
+    // may be important ------------------------------>
     User.findById(res.locals.tokenData._id, (err, doc) => {
       if (err) {
         console.err(err);
