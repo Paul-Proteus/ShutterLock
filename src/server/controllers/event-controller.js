@@ -1,6 +1,8 @@
 const db = require('../elephantsql');
 const bcrypt = require('bcryptjs');
 
+// middleware for postgresql.  
+
 const controller = {
 
   createUser (req, res, next) {

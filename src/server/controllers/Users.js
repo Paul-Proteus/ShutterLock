@@ -1,6 +1,9 @@
 const { User, Palette } = require('../models/User');
 const bcrypt = require('bcryptjs');
 
+// this page will be scraped for bcrypt
+  // - JON
+
 const UsersController = {
   // Middlware for login
   login(req, res, next) {
@@ -39,8 +42,9 @@ const UsersController = {
     // get user from token and get doc back
     // grab doc.palettes like above and use filter method to get array element to be deleted
 
-    // may be important ------------------------------>
+    // may be important for token ------------------------------>
     User.findById(res.locals.tokenData._id, (err, doc) => {
+      // ----------------------------------------------------------->
       if (err) {
         console.err(err);
       }

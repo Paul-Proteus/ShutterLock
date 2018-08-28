@@ -1,5 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
+// using for tokens. 
+
 const deviceStorage = {
 
   async saveItem(key, value) {

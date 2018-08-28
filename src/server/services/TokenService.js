@@ -22,12 +22,14 @@ class Token {
     return jwt.decode(token);
   }
 
-  // Helper function to generate new token
-  // generateToken(payload) {
-  //   return new Promise((resolve, reject) =>
-  //     jwt.sign(payload, process.env.SECRET, (err, data) => (err ? reject(err) : resolve(data)))
-  //   );
-  // }
+  /* // originally commented out by old team. 
+   *  // Helper function to generate new token 
+   *  // generateToken(payload) {
+   *  //   return new Promise((resolve, reject) =>
+   *  //     jwt.sign(payload, process.env.SECRET, (err, data) => (err ? reject(err) : resolve(data)))
+   *  //   );
+   *  // }
+*/
 
   // Middleware for creating token
   createToken(req, res, next) {

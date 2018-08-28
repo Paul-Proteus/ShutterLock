@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import deviceStorage from './deviceStorage.js';
+import deviceStorage from './deviceStorage.js'; // attempting to use for tokens. 
 
 export default class App extends React.Component {
   constructor(props) {

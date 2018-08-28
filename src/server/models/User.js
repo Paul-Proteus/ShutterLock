@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const SALT_ROUNDS = 10;
 
 // this file imports bcrypt, uses the hash function on the password section.
+// will parse this file for bcrypt. 
 
 userSchema.pre('save', function(next) {
   const self = this;

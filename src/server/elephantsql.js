@@ -3,7 +3,5 @@ const db = pgp("postgres://fuuqhclf:ZhUsdo_Qg9Xa4rDHp3g0KJ3Gn-B03qCO@stampy.db.e
 
 // connect to elephantSQL
 db.connect()
-  // .then(res => console.log(res))
-  // .catch(err => console.log(err));
 
 module.exports = db;
