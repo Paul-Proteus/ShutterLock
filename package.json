@@ -1,35 +1,29 @@
 {
-  "name": "tinge",
-  "version": "1.0.0",
-  "description": "Find most prominent colors in any image.",
-  "main": "index.js",
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "exp": "^57.0.0",
+    "i": "^0.3.6",
+    "jest-expo": "~27.0.0",
+    "react-native-scripts": "1.14.0",
+    "react-navigation": "^2.12.1",
+    "react-test-renderer": "16.3.1"
+  },
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
-    "server": "nodemon -e js,html,css src/server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RedLippedBatfish/tinge.git"
+  "jest": {
+    "preset": "jest-expo"
   },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/RedLippedBatfish/tinge/issues"
-  },
-  "homepage": "https://github.com/RedLippedBatfish/tinge#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.4",
-    "dotenv": "^6.0.0",
-    "expo-cli": "^1.1.0-beta.6",
-    "express": "^4.16.3",
-    "jsonwebtoken": "^8.3.0",
-    "jwt-simple": "^0.5.1",
-    "mongoose": "^5.2.9",
-    "nodemon": "^1.18.3",
-    "passport-jwt": "^4.0.0",
-    "pg": "^7.4.3",
-    "pg-promise": "^8.4.6"
+    "expo": "^27.0.1",
+    "react": "16.3.1",
+    "react-native": "~0.55.2"
   }
 }
